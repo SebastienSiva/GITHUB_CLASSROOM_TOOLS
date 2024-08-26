@@ -1,0 +1,24 @@
+TOP DIRECTORY
+--------
+gh auth login (Use HTTPS)
+gh classroom clone student-repos
+
+ASG DIRECTORY
+--------
+../scripts/get_dates.sh
+../scripts/local_builds.sh # NOTE ../Editor/Builder.cs # to fix scene name (usually required)
+grep "Build Successful" */build_log.txt
+python3 -m http.server (sperate tab)
+../scripts/open_local_pages.sh
+../scripts/open_pages.py
+
+STUD DIRECTORY
+--------
+git checkout -f 0b8b4d5  (git commit id for rolling back to commit before deadline)
+git log
+
+
+
+			target = BuildTarget.StandaloneOSX, 
+			locationPathName = "./MacOS",
+			options = BuildOptions.AutoRunPlayer,
