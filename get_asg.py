@@ -58,7 +58,7 @@ if not os.path.isdir(repos_dir):
 			shutil.rmtree(path)
 
 # for each repo in the directory check data and propose rollback options
-for path in glob.glob(f'{repos_dir}/*/*'):
+for path in sorted(glob.glob(f'{repos_dir}/*/*')):
 	repo = Repo(path)
 	repo_name = os.path.basename(repo.working_dir)
 	commits = list(repo.iter_commits(all=True, max_count=100))

@@ -50,8 +50,8 @@ public class Builder
 
 	public static void BuildProject()
 	{
-		string sceneName = getSceneName("MainGame");
-		Debug.Log($"Using Scene: {sceneName}");
+		string sceneName = getSceneName("Game");
+		Debug.Log($"USING SCENE: {sceneName}");
 		var options = new BuildPlayerOptions
 		{
             scenes = new[] {sceneName,},
@@ -66,11 +66,11 @@ public class Builder
 
         if (report.summary.result == BuildResult.Succeeded)
         {
-            Debug.Log($"Build Successful - Scene: {sceneName} Written To:  {options.locationPathName}");
+            Debug.Log($"BUILD SUCCESFUL - Scene: {sceneName} Written To:  {options.locationPathName}");
         }
         else if (report.summary.result == BuildResult.Failed)
         {
-            Debug.LogError($"Build Failed");
+            Debug.LogError($"BUILD FALIED");
         }
 		
 	}
