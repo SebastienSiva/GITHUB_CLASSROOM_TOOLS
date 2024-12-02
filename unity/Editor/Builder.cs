@@ -59,7 +59,8 @@ public class Builder
 			//locationPathName = "./WebGL",
 			target = BuildTarget.StandaloneOSX, 
 			locationPathName = "./MacOS",
-			options = BuildOptions.AutoRunPlayer,
+			options = BuildOptions.CleanBuildCache,
+			//options = BuildOptions.AutoRunPlayer,
 		};
 
         var report = BuildPipeline.BuildPlayer(options);

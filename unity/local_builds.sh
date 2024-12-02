@@ -1,9 +1,12 @@
 #!/bin/bash
 
+# might need to edit scene name in Editor/Builder.cs
+
 export PATH=/Applications/Unity/Hub/Editor/2022.3.17f1/Unity.app/Contents/MacOS/:$PATH
 
 if [ $# -eq 0 ]; then
  echo "no asg directory specified"
+ echo "./local_builds.sh ../temp_grading/ITEC4650/d_653730/asg2-flappy-dragon-submissions"
  exit 1
 fi
 

@@ -1,5 +1,7 @@
 TOP DIRECTORY
 --------
+./get_asg.py temp_grading/DATA1501 642427 8/26/24 11:59 PM
+
 gh auth login (Use HTTPS)
 gh classroom clone student-repos
 

@@ -7,10 +7,14 @@ from git import Repo
 print_time_format = "%x %a %I:%M %p"
 
 if len(sys.argv) < 6:
-	print("USAGE:   ./get_asg.py working_dir asg_id m/d/yy h:m [A|P]M")
+	print("USAGE:   ./get_asg.py working_dir asg_id m/d/yy h:m [A|P]M [GROUP]")
 	print("EXAMPLE: ./get_asg.py temp_grading/DATA1501 642427 8/26/24 11:59 PM")
 	print("Asg Id can be found in website under Download/Clone with CLI")
+	print("NOTE: GitHub classroom_roster.csv must be in dir.")
 	sys.exit(0)
+
+group_asg = (len(sys.argv) == 7 and sys.argv[6] == 'GROUP')
+	
 
 working_dir = sys.argv[1]
 asg_id = sys.argv[2]
@@ -26,12 +30,19 @@ with open(f'{working_dir}/classroom_roster.csv') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
     	id = row['identifier']
-    	if '@ggc.edu' in id: # skip non-ggc entries in roster (test gmail accounts...)
-    		last_name, first_name, email = id.split(",")
+    	id_name_list = id.split(",")
+    	# skip:
+    	#   - non-ggc entries in roster (test gmail accounts...)
+    	#   - non-linked accounts
+    	#   - accounts missing last_name and first_name
+    	if '@ggc.edu' in id and len(row['github_username'])>0 and len(id_name_list)>=3:
+    		last_name, first_name, email = id_name_list
     		roster[row['github_username']]  = '_'.join((
     			first_name.replace(" ", ""), 
     			last_name.replace(" ", ""), 
     			email.replace('@ggc.edu', '')))
+    	else:
+    		print("WARNING: Skipping", id)
 
 # CLEAN OLD DIR
 if os.path.isdir(repos_dir):
@@ -46,16 +57,17 @@ if not os.path.isdir(repos_dir):
 		["gh", "classroom", "clone", "student-repos", "-a", asg_id, "-d", repos_dir]) 
 
 	# RENAME REPO FOLDERS USING ROSTER NAMES
-	for path in glob.glob(f'{repos_dir}/*/*'):
-		dir_name = os.path.basename(path)
-		for id in roster:
-			if id in dir_name:
-				# replace last occurence of id with real name
-				new_path = roster[id].join(path.rsplit(id, 1)) 
-				os.rename(path, new_path)
-				break
-		else:
-			shutil.rmtree(path)
+	if not group_asg:
+		for path in glob.glob(f'{repos_dir}/*/*'):
+			dir_name = os.path.basename(path)
+			for id in roster:
+				if id in dir_name:
+					# replace last occurence of id with real name
+					new_path = roster[id].join(path.rsplit(id, 1)) 
+					os.rename(path, new_path)
+					break
+			else:
+				shutil.rmtree(path)
 
 # for each repo in the directory check data and propose rollback options
 for path in sorted(glob.glob(f'{repos_dir}/*/*')):
