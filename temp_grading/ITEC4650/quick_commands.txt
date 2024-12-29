@@ -1,0 +1,4 @@
+find Dragon_Cave -name "*.cs" | grep -v Temp | grep -v Library| grep -v Assembly | xargs ./moss -l csharp
+
+
+find  -name "Program.cs" | xargs ./moss -l csharp

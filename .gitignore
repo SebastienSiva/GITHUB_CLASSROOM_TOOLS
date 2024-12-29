@@ -1,5 +1,5 @@
 # where we grade
-temp_grading
+temp_grading/*/d_*
 
 # CSV files with student data
 *.csv
