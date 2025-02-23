@@ -2,3 +2,7 @@ find Dragon_Cave -name "*.cs" | grep -v Temp | grep -v Library| grep -v Assembly
 
 
 find  -name "Program.cs" | xargs ./moss -l csharp
+
+# deals with spaces in folder names
+find d_752943/asg3-3d-shooter-submissions -name "ExplosionController.cs" -exec ./moss -l csharp '{}' \+
+
