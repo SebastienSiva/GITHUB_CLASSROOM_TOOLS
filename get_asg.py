@@ -77,7 +77,7 @@ for path in sorted(glob.glob(f'{repos_dir}/*/*')):
 	dt = datetime.datetime.fromtimestamp(commits[0].committed_date)
 	if dt > due_date:
 		#LATE
-		print(repo_name, "Requires Rollback")	
+		print('\n\n' + ('*'*80) + '\n' + repo_name, "Requires Rollback")	
 		for i in range(len(commits)):
 			c = commits[i]
 			dt = datetime.datetime.fromtimestamp(c.committed_date) 
@@ -85,7 +85,7 @@ for path in sorted(glob.glob(f'{repos_dir}/*/*')):
 				len(commits)-(i+1),
 				'LATE' if dt > due_date else 'ONTIME',
 				dt.strftime(print_time_format),
-				c.message.strip(), 
+				': ' + c.message.replace('\n','|').strip(), 
 				c.hexsha[0:6]))
 				
 		c_id = int(input("Rollback ID: "))
